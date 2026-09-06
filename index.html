@@ -3,573 +3,1777 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Daily Knowledge — מהדורת היום</title>
+
 <style>
-:root{ --bg:#f5f7fb; --card:#ffffff; --text:#172033; --muted:#687386; --primary:#3157d5; --primary-dark:#203da3; --border:#e5e9f2; --green:#16835b; --orange:#e78919; --red:#d94b4b; --shadow:0 8px 30px rgba(24,36,64,.08); --radius:18px; }
-*{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{ margin:0; font-family:Arial,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
-button, input{ font-family:inherit; }
-button{ cursor:pointer; }
-header{ background:linear-gradient(135deg,#17254d,#3157d5); color:white; padding:24px 18px 42px; }
-.header-inner{ max-width:1200px; margin:auto; }
-.topbar{ display:flex; justify-content:space-between; align-items:center; gap:15px; }
-.logo{ font-size:24px; font-weight:800; }
-.date{ font-size:14px; opacity:.85; }
-.hero{ margin-top:35px; }
-.hero h1{ font-size:clamp(30px,5vw,52px); line-height:1.1; margin:0 0 12px; }
-.hero p{ max-width:720px; margin:0; color:#e4e9ff; font-size:18px; }
-.header-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:28px; }
-.stat{ background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); padding:14px; border-radius:14px; }
-.stat strong{ display:block; font-size:25px; }
-nav{ position:sticky; top:0; z-index:50; background:white; border-bottom:1px solid var(--border); box-shadow:0 4px 15px rgba(0,0,0,.04); }
-.nav-inner{ max-width:1200px; margin:auto; display:flex; overflow-x:auto; }
-.nav-btn{ border:0; background:none; padding:15px 20px; white-space:nowrap; color:var(--muted); font-weight:700; border-bottom:3px solid transparent; }
-.nav-btn.active{ color:var(--primary); border-bottom-color:var(--primary); }
-main{ max-width:1200px; margin:35px auto; padding:0 18px; }
-.section{ margin-bottom:55px; }
-.section-title{ display:flex; align-items:center; justify-content:space-between; gap:15px; margin-bottom:20px; }
-.section-title h2{ margin:0; font-size:28px; }
-.section-title p{ margin:0; color:var(--muted); }
-.more-btn{ background:white; border:1px solid var(--border); padding:9px 14px; border-radius:10px; color:var(--primary); font-weight:700; }
-.brief-grid{ display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; }
-.brief-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
-.brief-card.main{ background:linear-gradient(135deg,#eef2ff,#fff); }
-.tag{ display:inline-block; font-size:12px; font-weight:800; padding:4px 9px; border-radius:20px; background:#edf1ff; color:var(--primary); margin-bottom:10px; }
-.brief-card h3{ margin:5px 0 8px; font-size:22px; }
-.brief-card p{ color:var(--muted); margin:0; }
-.news-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-.news-card{ background:white; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); transition:.2s; }
-.news-card:hover{ transform:translateY(-3px); }
-.news-content{ padding:20px; }
-.news-meta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:12px; color:var(--muted); }
-.news-card h3{ font-size:20px; line-height:1.4; margin:8px 0; }
-.summary{ color:var(--muted); }
-.impact{ margin-top:14px; display:flex; justify-content:space-between; align-items:center; font-size:13px; }
-.impact-bar{ width:100px; height:7px; background:#edf0f5; border-radius:20px; overflow:hidden; }
-.impact-fill{ height:100%; background:var(--primary); }
-.actions{ display:flex; gap:8px; margin-top:18px; }
-.btn{ border:0; padding:10px 13px; border-radius:10px; font-weight:700; text-decoration:none; display:inline-block; text-align:center; }
-.btn-primary{ background:var(--primary); color:white; }
-.btn-secondary{ background:#f0f3f9; color:var(--text); }
-.details{ display:none; margin-top:20px; padding-top:18px; border-top:1px solid var(--border); }
-.news-card.open .details{ display:block; }
-.details h4{ margin-bottom:5px; margin-top:15px; }
-.fact{ border-right:4px solid var(--primary); background:#f6f8ff; padding:12px; margin:12px 0; border-radius:8px; }
-.deep-dive{ background:linear-gradient(135deg,#111c3d,#273c80); color:white; border-radius:24px; padding:35px; box-shadow:var(--shadow); }
-.deep-dive p{ color:#dce3ff; }
-.deep-grid{ display:grid; grid-template-columns:2fr 1fr; gap:25px; }
-.deep-box{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:16px; padding:20px; }
-.filters{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
-.filter{ border:1px solid var(--border); background:white; padding:8px 13px; border-radius:20px; }
-.filter.active{ background:var(--primary); color:white; }
-.discovery-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:15px; }
-.discovery{ background:white; border:1px solid var(--border); border-radius:16px; padding:18px; }
-.discovery-icon{ font-size:32px; }
-.discovery h3{ margin:7px 0; }
-.learning-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
-.lesson{ background:white; border:1px solid var(--border); border-radius:20px; padding:25px; box-shadow:var(--shadow); }
-.lesson h3{ font-size:25px; margin-top:8px; }
-.timeline{ border-right:3px solid var(--primary); padding-right:18px; margin:20px 0; }
-.timeline-item{ margin-bottom:16px; }
-.timeline-item strong{ color:var(--primary); }
-.lesson-list{ padding-right:20px; }
-.quiz{ background:white; border:1px solid var(--border); border-radius:20px; padding:25px; box-shadow:var(--shadow); }
-.question{ margin-bottom:30px; }
-.option{ display:block; width:100%; text-align:right; background:#f7f8fb; border:1px solid var(--border); padding:12px 15px; margin:8px 0; border-radius:10px; }
-.option:hover{ border-color:var(--primary); }
-.option.correct{ background:#e8f7f0; border-color:var(--green); }
-.option.wrong{ background:#fff0f0; border-color:var(--red); }
-.explanation{ display:none; margin-top:10px; color:var(--muted); }
-.recipe-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-.recipe{ background:white; border:1px solid var(--border); border-radius:18px; padding:20px; }
-.recipe-icon{ font-size:45px; }
-.recipe-meta{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-.recipe-meta span{ background:#f0f3f8; border-radius:20px; padding:5px 10px; font-size:12px; }
-.archive{ background:white; border:1px solid var(--border); border-radius:18px; overflow:hidden; }
-.archive-row{ display:flex; justify-content:space-between; align-items:center; padding:17px 20px; border-bottom:1px solid var(--border); }
-.archive-row:last-child{ border-bottom:0; }
-.search-box{ margin-bottom:25px; }
-.search-box input{ width:100%; border:1px solid var(--border); border-radius:14px; padding:15px; font-size:16px; outline:none; }
-.search-box input:focus{ border-color:var(--primary); }
-footer{ background:#172033; color:white; padding:35px 18px; margin-top:60px; }
-.footer-inner{ max-width:1200px; margin:auto; display:flex; justify-content:space-between; gap:20px; }
-footer p{ color:#aeb7c9; }
-@media(max-width:900px){ .brief-grid, .news-grid, .recipe-grid{ grid-template-columns:repeat(2,1fr); } .discovery-grid{ grid-template-columns:repeat(2,1fr); } .deep-grid{ grid-template-columns:1fr; } }
-@media(max-width:650px){ header{ padding-bottom:30px; } .header-stats{ grid-template-columns:repeat(2,1fr); } .brief-grid, .news-grid, .learning-grid, .recipe-grid, .discovery-grid{ grid-template-columns:1fr; } main{ margin-top:25px; } .section-title{ align-items:flex-start; flex-direction:column; } .deep-dive{ padding:25px 20px; } .hero p{ font-size:16px; } .footer-inner{ flex-direction:column; } }
+:root{
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#687386;
+    --primary:#3157d5;
+    --primary-dark:#203da3;
+    --border:#e5e9f2;
+    --green:#16835b;
+    --orange:#e78919;
+    --red:#d94b4b;
+    --shadow:0 8px 30px rgba(24,36,64,.08);
+    --radius:18px;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial,"Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    background:linear-gradient(135deg,#17254d,#3157d5);
+    color:white;
+    padding:24px 18px 42px;
+}
+
+.header-inner{
+    max-width:1200px;
+    margin:auto;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:800;
+}
+
+.date{
+    font-size:14px;
+    opacity:.85;
+}
+
+.hero{
+    margin-top:35px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,52px);
+    line-height:1.1;
+    margin:0 0 12px;
+}
+
+.hero p{
+    max-width:720px;
+    margin:0;
+    color:#e4e9ff;
+    font-size:18px;
+}
+
+.header-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:28px;
+}
+
+.stat{
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.15);
+    padding:14px;
+    border-radius:14px;
+}
+
+.stat strong{
+    display:block;
+    font-size:25px;
+}
+
+/* ================= NAV ================= */
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:white;
+    border-bottom:1px solid var(--border);
+    box-shadow:0 4px 15px rgba(0,0,0,.04);
+}
+
+.nav-inner{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    overflow-x:auto;
+}
+
+.nav-btn{
+    border:0;
+    background:none;
+    padding:15px 20px;
+    white-space:nowrap;
+    color:var(--muted);
+    font-weight:700;
+    border-bottom:3px solid transparent;
+}
+
+.nav-btn.active{
+    color:var(--primary);
+    border-bottom-color:var(--primary);
+}
+
+/* ================= MAIN ================= */
+
+main{
+    max-width:1200px;
+    margin:35px auto;
+    padding:0 18px;
+}
+
+.section{
+    margin-bottom:55px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.section-title h2{
+    margin:0;
+    font-size:28px;
+}
+
+.section-title p{
+    margin:0;
+    color:var(--muted);
+}
+
+.more-btn{
+    background:white;
+    border:1px solid var(--border);
+    padding:9px 14px;
+    border-radius:10px;
+    color:var(--primary);
+    font-weight:700;
+}
+
+/* ================= MORNING BRIEF ================= */
+
+.brief-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:16px;
+}
+
+.brief-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.brief-card.main{
+    background:linear-gradient(135deg,#eef2ff,#fff);
+}
+
+.tag{
+    display:inline-block;
+    font-size:12px;
+    font-weight:800;
+    padding:4px 9px;
+    border-radius:20px;
+    background:#edf1ff;
+    color:var(--primary);
+    margin-bottom:10px;
+}
+
+.brief-card h3{
+    margin:5px 0 8px;
+    font-size:22px;
+}
+
+.brief-card p{
+    color:var(--muted);
+    margin:0;
+}
+
+/* ================= NEWS ================= */
+
+.news-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.news-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    transition:.2s;
+}
+
+.news-card:hover{
+    transform:translateY(-3px);
+}
+
+.news-content{
+    padding:20px;
+}
+
+.news-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+    font-size:12px;
+    color:var(--muted);
+}
+
+.news-card h3{
+    font-size:20px;
+    line-height:1.4;
+    margin:8px 0;
+}
+
+.summary{
+    color:var(--muted);
+}
+
+.impact{
+    margin-top:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+}
+
+.impact-bar{
+    width:100px;
+    height:7px;
+    background:#edf0f5;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.impact-fill{
+    height:100%;
+    background:var(--primary);
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    margin-top:18px;
+}
+
+.btn{
+    border:0;
+    padding:10px 13px;
+    border-radius:10px;
+    font-weight:700;
+    text-decoration:none;
+    display:inline-block;
+    text-align:center;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-secondary{
+    background:#f0f3f9;
+    color:var(--text);
+}
+
+/* ================= EXPANDABLE ================= */
+
+.details{
+    display:none;
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px solid var(--border);
+}
+
+.news-card.open .details{
+    display:block;
+}
+
+.details h4{
+    margin-bottom:5px;
+}
+
+.fact{
+    border-right:4px solid var(--primary);
+    background:#f6f8ff;
+    padding:12px;
+    margin:12px 0;
+    border-radius:8px;
+}
+
+/* ================= DEEP DIVE ================= */
+
+.deep-dive{
+    background:linear-gradient(135deg,#111c3d,#273c80);
+    color:white;
+    border-radius:24px;
+    padding:35px;
+    box-shadow:var(--shadow);
+}
+
+.deep-dive p{
+    color:#dce3ff;
+}
+
+.deep-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+}
+
+.deep-box{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:16px;
+    padding:20px;
+}
+
+/* ================= DISCOVERY ================= */
+
+.filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.filter{
+    border:1px solid var(--border);
+    background:white;
+    padding:8px 13px;
+    border-radius:20px;
+}
+
+.filter.active{
+    background:var(--primary);
+    color:white;
+}
+
+.discovery-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.discovery{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+}
+
+.discovery-icon{
+    font-size:32px;
+}
+
+.discovery h3{
+    margin:7px 0;
+}
+
+/* ================= KNOWLEDGE LAB ================= */
+
+.learning-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.lesson{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:var(--shadow);
+}
+
+.lesson h3{
+    font-size:25px;
+    margin-top:8px;
+}
+
+.timeline{
+    border-right:3px solid var(--primary);
+    padding-right:18px;
+    margin:20px 0;
+}
+
+.timeline-item{
+    margin-bottom:16px;
+}
+
+.timeline-item strong{
+    color:var(--primary);
+}
+
+.lesson-list{
+    padding-right:20px;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:var(--shadow);
+}
+
+.question{
+    margin-bottom:30px;
+}
+
+.option{
+    display:block;
+    width:100%;
+    text-align:right;
+    background:#f7f8fb;
+    border:1px solid var(--border);
+    padding:12px 15px;
+    margin:8px 0;
+    border-radius:10px;
+}
+
+.option:hover{
+    border-color:var(--primary);
+}
+
+.option.correct{
+    background:#e8f7f0;
+    border-color:var(--green);
+}
+
+.option.wrong{
+    background:#fff0f0;
+    border-color:var(--red);
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    color:var(--muted);
+}
+
+/* ================= RECIPES ================= */
+
+.recipe-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.recipe{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+}
+
+.recipe-icon{
+    font-size:45px;
+}
+
+.recipe-meta{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.recipe-meta span{
+    background:#f0f3f8;
+    border-radius:20px;
+    padding:5px 10px;
+    font-size:12px;
+}
+
+/* ================= ARCHIVE ================= */
+
+.archive{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.archive-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:17px 20px;
+    border-bottom:1px solid var(--border);
+}
+
+.archive-row:last-child{
+    border-bottom:0;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    margin-bottom:25px;
+}
+
+.search-box input{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+    font-size:16px;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:var(--primary);
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#172033;
+    color:white;
+    padding:35px 18px;
+    margin-top:60px;
+}
+
+.footer-inner{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+footer p{
+    color:#aeb7c9;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .brief-grid,
+    .news-grid,
+    .recipe-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .discovery-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .deep-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    header{
+        padding-bottom:30px;
+    }
+
+    .header-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .brief-grid,
+    .news-grid,
+    .learning-grid,
+    .recipe-grid,
+    .discovery-grid{
+        grid-template-columns:1fr;
+    }
+
+    main{
+        margin-top:25px;
+    }
+
+    .section-title{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .deep-dive{
+        padding:25px 20px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+    }
+
+}
 </style>
 </head>
+
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header>
-  <div class="header-inner">
-    <div class="topbar">
-      <div class="logo">🧠 Daily Knowledge</div>
-      <div class="date">יום שני · 7 בספטמבר 2026</div>
-    </div>
-    <div class="hero">
-      <h1>מהדורת הידע היומית</h1>
-      <p>חדשות טכנולוגיה, מודלי AI מובילים, שיעורי עומק, מתכונים וחידונים במקום אחד.</p>
-    </div>
-    <div class="header-stats">
-      <div class="stat"><strong>12</strong> כתבות מרכזיות</div>
-      <div class="stat"><strong>9</strong> גילויים חדשים</div>
-      <div class="stat"><strong>2</strong> שיעורי ידע</div>
-      <div class="stat"><strong>10</strong> שאלות חידון</div>
-    </div>
-  </div>
+
+<div class="header-inner">
+
+<div class="topbar">
+    <div class="logo">🧠 Daily Knowledge</div>
+    <div class="date">יום שני · 7 בספטמבר 2026</div>
+</div>
+
+<div class="hero">
+    <h1>מהדורת הידע היומית</h1>
+    <p>
+        חדשות חשובות, AI, כלים חדשים, שיעורי ידע,
+        מתכונים וחידון — במקום אחד.
+    </p>
+</div>
+
+<div class="header-stats">
+
+<div class="stat">
+<strong>12</strong>
+כתבות מרכזיות
+</div>
+
+<div class="stat">
+<strong>9</strong>
+גילויים חדשים
+</div>
+
+<div class="stat">
+<strong>2</strong>
+שיעורי ידע
+</div>
+
+<div class="stat">
+<strong>10</strong>
+שאלות חידון
+</div>
+
+</div>
+
+</div>
+
 </header>
 
+<!-- ================= NAV ================= -->
+
 <nav>
-  <div class="nav-inner">
-    <button class="nav-btn active" onclick="showSection('home',this)">🏠 היום</button>
-    <button class="nav-btn" onclick="showSection('news',this)">📰 חדשות</button>
-    <button class="nav-btn" onclick="showSection('discovery',this)">🤖 AI Discovery</button>
-    <button class="nav-btn" onclick="showSection('knowledge',this)">🧠 Knowledge Lab</button>
-    <button class="nav-btn" onclick="showSection('recipes',this)">🍳 מתכונים</button>
-    <button class="nav-btn" onclick="showSection('quiz',this)">🎯 Quiz</button>
-    <button class="nav-btn" onclick="showSection('archive',this)">📚 ארכיון</button>
-  </div>
+
+<div class="nav-inner">
+
+<button class="nav-btn active" onclick="showSection('home',this)">🏠 היום</button>
+<button class="nav-btn" onclick="showSection('news',this)">📰 חדשות</button>
+<button class="nav-btn" onclick="showSection('discovery',this)">🤖 AI Discovery</button>
+<button class="nav-btn" onclick="showSection('knowledge',this)">🧠 Knowledge Lab</button>
+<button class="nav-btn" onclick="showSection('recipes',this)">🍳 מתכונים</button>
+<button class="nav-btn" onclick="showSection('quiz',this)">🎯 Quiz</button>
+<button class="nav-btn" onclick="showSection('archive',this)">📚 ארכיון</button>
+
+</div>
+
 </nav>
 
 <main>
-  <!-- HOME -->
-  <section id="home" class="section">
-    <div class="section-title">
-      <div>
-        <h2>☀️ הבוקר ב־Daily Knowledge</h2>
-        <p>הדברים החשובים ביותר שקרו בעולם הטכנולוגיה והמחקר</p>
-      </div>
-    </div>
-    <div class="brief-grid">
-      <div class="brief-card main">
-        <span class="tag">🔥 TOP STORY</span>
-        <h3>המעבר לארכיטקטורת Multi-Agent בארגונים</h3>
-        <p>מערכות בינה מלאכותית מתקדמות עוברות מענה של שאלה בודדת לתזמור צוותי סוכנים אוטונומיים שמבצעים תהליכי פיתוח ומחקר שלמים.</p>
-      </div>
-      <div class="brief-card">
-        <span class="tag">🤖 AI</span>
-        <h3>מודלי SLM מקומיים</h3>
-        <p>זינוק בשימוש במודלי שפה קטנים המאפשרים הרצה מאובטחת על שרתי חברות באפס עלויות ענן.</p>
-      </div>
-      <div class="brief-card">
-        <span class="tag">💰 MARKET</span>
-        <h3>רגולציית פיתוח תוכנה</h3>
-        <p>תקנים חדשים באירופה ובארצות הברית מחייבים שקיפות מלאה באימון מודלי קוד פתוח.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- NEWS -->
-  <section id="news" class="section">
-    <div class="section-title">
-      <div>
-        <h2>📰 AI & Tech News</h2>
-        <p>עדכונים שוטפים וניתוחים מקצועיים</p>
-      </div>
-      <button class="more-btn" onclick="showMoreNews()">הצג עוד</button>
-    </div>
-    <div class="search-box">
-      <input type="search" id="searchInput" placeholder="🔎 חפש כתבה, חברה, מודל או נושא..." oninput="searchNews()">
-    </div>
-    <div class="news-grid" id="newsGrid">
-      <!-- NEWS 1 -->
-      <article class="news-card">
-        <div class="news-content">
-          <div class="news-meta">
-            <span>🤖 AI Models</span>
-            <span>לפני 3 שעות</span>
-          </div>
-          <h3>השקת מערכות בקרה מתקדמות לסוכני AI אוטונומיים</h3>
-          <p class="summary">פלטפורמות פיתוח חדשות משחררות שכבת בקרה אחידה (Control Planes) לניהול מספר סוכנים במקביל.</p>
-          <div class="impact">
-            <span>Impact: 9/10</span>
-            <div class="impact-bar"><div class="impact-fill" style="width:90%"></div></div>
-          </div>
-          <div class="actions">
-            <button class="btn btn-primary" onclick="toggleCard(this)">קרא עוד</button>
-            <a class="btn btn-secondary" href="https://github.com" target="_blank">מקור</a>
-          </div>
-          <div class="details">
-            <h4>🆕 מה קרה?</h4>
-            <p>חברות תוכנה מובילות שחררו השבוע מסגרות עבודה לניהול סוכני AI מרובים, המאפשרים לסוכן כתיבת קוד ולסוכן בדיקות לתקשר ישירות.</p>
-            <h4>⏮️ מה היה קודם?</h4>
-            <p>בעבר נדרש תפעול ידני של כל משימה מול מודל צ'אט בודד ללא יכולת תיאום אוטומטית בין סוכנים שונים.</p>
-            <h4>⚙️ מה השתנה?</h4>
-            <p>שילוב פרוטוקולי תקשורת סטנדרטיים בין סוכנים שונים המורידים את שיעור ההזיות באופן דרסטי.</p>
-            <div class="fact">
-              ⚠️ <strong>מה עדיין מוגבל?</strong><br>דרישה למשאבי חומרה חזקים ותשתיות תקשורת מהירות להרצת מספר סוכנים במקביל.
-            </div>
-            <h4>🔮 מה צפוי לקרות?</h4>
-            <p>מעבר תקציבי ארגונים ממערכות SaaS מסורתיות לפלטפורמות ניהול מבוססות סוכנים אוטונומיים מלאים.</p>
-          </div>
-        </div>
-      </article>
+<!-- ================= HOME ================= -->
 
-      <!-- NEWS 2 -->
-      <article class="news-card">
-        <div class="news-content">
-          <div class="news-meta">
-            <span>🕵️ Agents</span>
-            <span>לפני 6 שעות</span>
-          </div>
-          <h3>האצת המעבר למודלי שפה מוקטנים ויעילים (SLMs)</h3>
-          <p class="summary">ארגונים פיננסיים עוברים למודלי 7B מקומיים להרצה מהירה באפס עלויות ענן ובפרטיות מלאה.</p>
-          <div class="impact">
-            <span>Impact: 8/10</span>
-            <div class="impact-bar"><div class="impact-fill" style="width:80%"></div></div>
-          </div>
-          <div class="actions">
-            <button class="btn btn-primary" onclick="toggleCard(this)">קרא עוד</button>
-            <a class="btn btn-secondary" href="https://huggingface.co" target="_blank">מקור</a>
-          </div>
-          <div class="details">
-            <h4>🆕 מה קרה?</h4>
-            <p>שחרור סדרת מודלים קטנים ומאומתים המותאמים לריצה על חומרה מקומית.</p>
-            <h4>⏮️ מה היה קודם?</h4>
-            <p>התבססות מוחלטת על ענקי ענן יקרים לעיבוד נתונים רגישים.</p>
-            <h4>💡 דוגמה מעשית</h4>
-            <p>חברה יכולה לנתח מסמכי לקוחות רגישים בתוך השרת הפנימי שלה בלי לשתף מידע החוצה.</p>
-          </div>
-        </div>
-      </article>
+<section id="home" class="section">
 
-      <!-- NEWS 3 -->
-      <article class="news-card">
-        <div class="news-content">
-          <div class="news-meta">
-            <span>💻 Open Source</span>
-            <span>אתמול</span>
-          </div>
-          <h3>סביבת פיתוח קוד פתוח חדשה למחקר</h3>
-          <p class="summary">כלי חדש המאפשר לחוקרים לבחון את יציבות מודלי השפה תחת עומסי מידע קיצוניים.</p>
-          <div class="impact">
-            <span>Impact: 7/10</span>
-            <div class="impact-bar"><div class="impact-fill" style="width:70%"></div></div>
-          </div>
-          <div class="actions">
-            <button class="btn btn-primary" onclick="toggleCard(this)">קרא עוד</button>
-            <a class="btn btn-secondary" href="https://github.com" target="_blank">GitHub</a>
-          </div>
-          <div class="details">
-            <h4>מה זה?</h4>
-            <p>כלי קוד פתוח המרכז מדדי ביצועים למודלי שפה.</p>
-            <h4>למה זה מעניין?</h4>
-            <p>מאפשר השוואה אובייקטיבית ומהירה בין מודלים שונים בשוק.</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
+<div class="section-title">
+<div>
+<h2>☀️ הבוקר ב־Daily Knowledge</h2>
+<p>שלושת הדברים שהכי חשוב לדעת היום</p>
+</div>
+</div>
 
-  <!-- DEEP DIVE -->
-  <section class="section">
-    <div class="deep-dive">
-      <div class="deep-grid">
-        <div>
-          <span class="tag">🔬 DEEP DIVE</span>
-          <h2>למה AI Agents הם אחד התחומים החשובים ביותר ב־AI?</h2>
-          <p>שיעור עומק שמסביר את הנושא מהבסיס: מהו Agent, איך הוא שונה מצ'אטבוט, איך הוא משתמש בכלים, ומה המשמעות של מעבר מ"AI שעונה" ל־"AI שמבצע".</p>
-          <button class="btn btn-primary" style="margin-top:15px;">התחל Deep Dive</button>
-        </div>
-        <div class="deep-box">
-          <strong>⏱️ זמן קריאה</strong>
-          <p>10–15 דקות</p>
-          <strong>📚 רמה</strong>
-          <p>מתחילים</p>
-          <strong>🧠 מה תלמד</strong>
-          <p>Agents · Tools · Planning · Memory · Multi-Agent</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="brief-grid">
 
-  <!-- DISCOVERY -->
-  <section id="discovery" class="section">
-    <div class="section-title">
-      <div>
-        <h2>🤖 AI Discovery</h2>
-        <p>מודלים, Agents, Spaces, כלים ודמואים חדשים</p>
-      </div>
-    </div>
-    <div class="filters">
-      <button class="filter active">הכול</button>
-      <button class="filter">Models</button>
-      <button class="filter">Agents</button>
-      <button class="filter">Tools</button>
-      <button class="filter">Open Source</button>
-    </div>
-    <div class="discovery-grid">
-      <div class="discovery">
-        <div class="discovery-icon">🧠</div>
-        <h3>Model מתקדם</h3>
-        <p>מודל חדש המצטיין בהבנת הקשרים ארוכי טווח במסמכים טכניים.</p>
-        <a class="btn btn-primary" href="https://huggingface.co" target="_blank">התנסה</a>
-      </div>
-      <div class="discovery">
-        <div class="discovery-icon">🕵️</div>
-        <h3>Agent מחקר</h3>
-        <p>סוכן אוטונומי הסורק מאגרים אקדמיים ומפיק סיכומי מחקר.</p>
-        <a class="btn btn-primary" href="https://github.com" target="_blank">נסה</a>
-      </div>
-      <div class="discovery">
-        <div class="discovery-icon">🏠</div>
-        <h3>Hugging Face Space</h3>
-        <p>דמו אינטראקטיבי להמרת טקסט לקוד תוכנה בזמן אמת.</p>
-        <a class="btn btn-primary" href="https://huggingface.co" target="_blank">פתח Space</a>
-      </div>
-      <div class="discovery">
-        <div class="discovery-icon">🛠️</div>
-        <h3>AI Tool ניהולי</h3>
-        <p>כלי פתוח לניתוח אוטומטי של תהליכי עבודה ארגוניים.</p>
-        <a class="btn btn-primary" href="https://github.com" target="_blank">פתח כלי</a>
-      </div>
-    </div>
-  </section>
+<div class="brief-card main">
+<span class="tag">🔥 TOP STORY</span>
+<h3>דוגמה: מירוץ ה־AI Agents נכנס לשלב חדש</h3>
+<p>
+כאן תופיע כתבה אמיתית ועדכנית מה־24 השעות האחרונות,
+עם הסבר עצמאי על האירוע והמשמעות שלו.
+</p>
+</div>
 
-  <!-- KNOWLEDGE LAB -->
-  <section id="knowledge" class="section">
-    <div class="section-title">
-      <div>
-        <h2>🧠 Knowledge Lab</h2>
-        <p>שני נושאי העשרה חדשים בכל יום</p>
-      </div>
-    </div>
-    <div class="learning-grid">
-      <!-- LESSON 1 -->
-      <article class="lesson">
-        <span class="tag">🌌 חלל · מתחילים</span>
-        <h3>איך נולד כוכב?</h3>
-        <p>כדי להבין כוכבים צריך להתחיל מהבסיס: מהו בכלל כוכב, מאיפה מגיע החומר, וכיצד כוח הכבידה יוצר את תהליך ההיתוך הגרעיני.</p>
-        <h4>📚 שלבי הלמידה</h4>
-        <ol class="lesson-list">
-          <li>מהו כוכב ואיך הוא פועל?</li>
-          <li>עננים מולקולריים בחלל</li>
-          <li>קריסה כבידתית ויצירת ליבה</li>
-          <li>תחילת ההיתוך הגרעיני</li>
-        </ol>
-        <h4>🕰️ רצף התהליך</h4>
-        <div class="timeline">
-          <div class="timeline-item"><strong>שלב 1</strong><br>ענן גז ואבק</div>
-          <div class="timeline-item"><strong>שלב 2</strong><br>קריסה כבידתית</div>
-          <div class="timeline-item"><strong>שלב 3</strong><br>פרוטו־כוכב</div>
-          <div class="timeline-item"><strong>שלב 4</strong><br>היתוך גרעיני פעיל</div>
-        </div>
-        <div class="fact">💡 <strong>הנקודה החשובה:</strong> כוכב אינו "בוער" כמו אש, אלא מייצר אנרגיה באמצעות תהליכים גרעיניים בליבה שלו.</div>
-        <button class="btn btn-primary">המשך לשיעור המלא</button>
-      </article>
+<div class="brief-card">
+<span class="tag">🤖 AI</span>
+<h3>מודל חדש</h3>
+<p>מה השתנה במודל ומה אפשר לעשות איתו.</p>
+</div>
 
-      <!-- LESSON 2 -->
-      <article class="lesson">
-        <span class="tag">🏛️ היסטוריה · מתחילים</span>
-        <h3>איך נבנתה האימפריה הרומית?</h3>
-        <p>נכיר את רומא מההתחלה: ממלכה קטנה באיטליה שהפכה בהדרגה לאחת המעצמות הגדולות בהיסטוריה.</p>
-        <h4>🕰️ ציר הזמן</h4>
-        <div class="timeline">
-          <div class="timeline-item"><strong>753 לפנה"ס</strong><br>ייסוד העיר רומא לפי המסורת.</div>
-          <div class="timeline-item"><strong>509 לפנה"ס</strong><br>תחילת תקופת הרפובליקה.</div>
-          <div class="timeline-item"><strong>27 לפנה"ס</strong><br>כינון הקיסרות תחת אוגוסטוס.</div>
-        </div>
-        <h4>👑 דמויות מרכזיות</h4>
-        <ul>
-          <li>יוליוס קיסר</li>
-          <li>אוגוסטוס</li>
-          <li>חניבעל</li>
-        </ul>
-        <button class="btn btn-primary">המשך לשיעור המלא</button>
-      </article>
-    </div>
-  </section>
+<div class="brief-card">
+<span class="tag">💰 MARKET</span>
+<h3>שינוי בתעשייה</h3>
+<p>אירוע משמעותי בשוק הטכנולוגיה.</p>
+</div>
 
-  <!-- QUIZ -->
-  <section id="quiz" class="section">
-    <div class="section-title">
-      <div>
-        <h2>🎯 Daily Quiz</h2>
-        <p>בדוק אם הבנת את החומר שלמדת היום</p>
-      </div>
-    </div>
-    <div class="quiz">
-      <div class="question">
-        <h3>1. מאיפה מגיעה האנרגיה המופקת בשמש?</h3>
-        <button class="option" onclick="answer(this,false)">A. שריפה של חמצן באטמוספירה</button>
-        <button class="option" onclick="answer(this,true)">B. היתוך גרעיני בליבה</button>
-        <button class="option" onclick="answer(this,false)">C. תהליכי בעירה כימיים</button>
-        <button class="option" onclick="answer(this,false)">D. אנרגיה חשמלית סטטית</button>
-        <div class="explanation">היתוך גרעיני משלב גרעינים קלים לגרעינים כבדים ומשחרר כמויות עצומות של אנרגיה.</div>
-      </div>
-      <div class="question">
-        <h3>2. מהו היתרון המרכזי של מודלי שפה קטנים (SLMs) בארגונים?</h3>
-        <button class="option" onclick="answer(this,false)">A. הם תמיד חכמים יותר ממודלי ענק</button>
-        <button class="option" onclick="answer(this,true)">B. הם מאפשרים הרצה מקומית בטוחה ומהירה</button>
-        <button class="option" onclick="answer(this,false)">C. הם אינם דורשים שרתים כלל</button>
-        <button class="option" onclick="answer(this,false)">D. הם מסוגלים לפתור בעיות פיזיקה מורכבות לבדם</button>
-        <div class="explanation">מודלים קטנים רצים ישירות על חומרה מקומית ומבטיחים פרטיות נתונים מלאה וחסכון בעלויות ענן.</div>
-      </div>
-    </div>
-  </section>
+</div>
 
-  <!-- RECIPES -->
-  <section id="recipes" class="section">
-    <div class="section-title">
-      <div>
-        <h2>🍳 Recipe Lab</h2>
-        <p>מתכונים מהירים ובריאים שכדאי להכיר</p>
-      </div>
-    </div>
-    <div class="recipe-grid">
-      <div class="recipe">
-        <div class="recipe-icon">🥗</div>
-        <h3>קערת עוף וירקות</h3>
-        <p>ארוחה פשוטה עשירה בחלבון וירקות טריים להכנה מהירה.</p>
-        <div class="recipe-meta">
-          <span>⏱️ 20 דקות</span>
-          <span>🥗 בריא</span>
-          <span>⭐ קל</span>
-        </div>
-        <br>
-        <a class="btn btn-primary" href="https://youtube.com" target="_blank">▶️ צפה במתכון</a>
-      </div>
-      <div class="recipe">
-        <div class="recipe-icon">🍳</div>
-        <h3>חביתה משודרגת</h3>
-        <p>מתכון בסיסי ההופך לארוחת בוקר עשירה וטעימה.</p>
-        <div class="recipe-meta">
-          <span>⏱️ 10 דקות</span>
-          <span>💰 זול</span>
-          <span>⭐ קל</span>
-        </div>
-        <br>
-        <a class="btn btn-primary" href="https://youtube.com" target="_blank">▶️ צפה במתכון</a>
-      </div>
-      <div class="recipe">
-        <div class="recipe-icon">🥣</div>
-        <h3>יוגורט, פירות ושיבולת שועל</h3>
-        <p>ארוחת בוקר קלילה המשלבת חלבון, סיבים ופירות טריים.</p>
-        <div class="recipe-meta">
-          <span>⏱️ 5 דקות</span>
-          <span>🥗 בריא</span>
-          <span>⭐ קל</span>
-        </div>
-        <br>
-        <a class="btn btn-primary" href="https://youtube.com" target="_blank">▶️ צפה במתכון</a>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <!-- ARCHIVE -->
-  <section id="archive" class="section">
-    <div class="section-title">
-      <div>
-        <h2>📚 Daily Archive</h2>
-        <p>מהדורות קודמות שמורות בארכיון</p>
-      </div>
-    </div>
-    <div class="archive">
-      <div class="archive-row"><strong>7 בספטמבר 2026</strong><span>12 כתבות · 2 שיעורים · 9 Discoveries</span></div>
-      <div class="archive-row"><strong>6 בספטמבר 2026</strong><span>10 כתבות · 2 שיעורים · 7 Discoveries</span></div>
-      <div class="archive-row"><strong>5 בספטמבר 2026</strong><span>14 כתבות · 2 שיעורים · 11 Discoveries</span></div>
-    </div>
-  </section>
+<!-- ================= NEWS ================= -->
+
+<section id="news" class="section">
+
+<div class="section-title">
+<div>
+<h2>📰 AI & Tech News</h2>
+<p>חדשות משמעותיות מה־24 השעות האחרונות</p>
+</div>
+
+<button class="more-btn" onclick="showMoreNews()">
+הצג עוד
+</button>
+
+</div>
+
+<div class="search-box">
+<input
+type="search"
+id="searchInput"
+placeholder="🔎 חפש כתבה, חברה, מודל או נושא..."
+oninput="searchNews()">
+</div>
+
+<div class="news-grid" id="newsGrid">
+
+<!-- NEWS 1 -->
+
+<article class="news-card">
+
+<div class="news-content">
+
+<div class="news-meta">
+<span>🤖 AI Models</span>
+<span>לפני 3 שעות</span>
+</div>
+
+<h3>דוגמה: מודל AI חדש שוחרר לציבור</h3>
+
+<p class="summary">
+כאן יופיע תקציר קצר וברור של האירוע.
+</p>
+
+<div class="impact">
+<span>Impact: 9/10</span>
+<div class="impact-bar">
+<div class="impact-fill" style="width:90%"></div>
+</div>
+</div>
+
+<div class="actions">
+
+<button
+class="btn btn-primary"
+onclick="toggleCard(this)">
+קרא עוד
+</button>
+
+<a
+class="btn btn-secondary"
+href="#"
+target="_blank">
+מקור
+</a>
+
+</div>
+
+<div class="details">
+
+<h4>🆕 מה קרה?</h4>
+<p>
+הסבר עצמאי ומפורט של האירוע.
+מי הכריז, מתי, ומה בדיוק הושק.
+</p>
+
+<h4>⏮️ מה היה קודם?</h4>
+<p>
+הסבר על הגרסה או המצב שהיה לפני השינוי.
+</p>
+
+<h4>⚙️ מה השתנה?</h4>
+<p>
+פירוט מדויק של השינויים.
+</p>
+
+<h4>📈 מה השתפר?</h4>
+<p>
+ביצועים, מחיר, מהירות, יכולות או שימושיות.
+</p>
+
+<h4>👤 מה המשמעות למשתמש?</h4>
+<p>
+מה אדם רגיל יכול לעשות עם הטכנולוגיה.
+</p>
+
+<h4>🏢 למה זה חשוב לתעשייה?</h4>
+<p>
+ההשפעה האפשרית על חברות, מפתחים והשוק.
+</p>
+
+<div class="fact">
+<strong>⚠️ מה עדיין מוגבל?</strong>
+<br>
+כאן יצוינו מגבלות, זמינות, מחיר, טעויות או בעיות.
+</div>
+
+<h4>🔮 מה צפוי לקרות?</h4>
+<p>
+הפרדה ברורה בין עובדות לבין תחזית או ניתוח.
+</p>
+
+<div class="actions">
+
+<a class="btn btn-primary" href="#" target="_blank">
+🚀 נסה בעצמך
+</a>
+
+<a class="btn btn-secondary" href="#" target="_blank">
+📰 מקור מלא
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- NEWS 2 -->
+
+<article class="news-card">
+
+<div class="news-content">
+
+<div class="news-meta">
+<span>🕵️ Agents</span>
+<span>לפני 6 שעות</span>
+</div>
+
+<h3>דוגמה: Agent חדש מסוגל לבצע משימה שלמה</h3>
+
+<p class="summary">
+מה השתנה בעולם הסוכנים ומה אפשר לבצע עכשיו.
+</p>
+
+<div class="impact">
+<span>Impact: 8/10</span>
+<div class="impact-bar">
+<div class="impact-fill" style="width:80%"></div>
+</div>
+</div>
+
+<div class="actions">
+
+<button class="btn btn-primary" onclick="toggleCard(this)">
+קרא עוד
+</button>
+
+<a class="btn btn-secondary" href="#" target="_blank">
+מקור
+</a>
+
+</div>
+
+<div class="details">
+
+<h4>🆕 מה קרה?</h4>
+<p>הסבר מפורט של ההשקה.</p>
+
+<h4>⏮️ מה היה קודם?</h4>
+<p>איך פתרו את הבעיה לפני כן.</p>
+
+<h4>⚙️ איך זה עובד?</h4>
+<p>הסבר למתחילים מאפס.</p>
+
+<h4>💡 דוגמה מעשית</h4>
+<p>
+דוגמה אמיתית למשימה שהמשתמש יכול לתת לסוכן.
+</p>
+
+<h4>⚠️ מגבלות</h4>
+<p>מה עדיין לא עובד היטב.</p>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- NEWS 3 -->
+
+<article class="news-card">
+
+<div class="news-content">
+
+<div class="news-meta">
+<span>💻 Open Source</span>
+<span>אתמול</span>
+</div>
+
+<h3>פרויקט Open Source חדש</h3>
+
+<p class="summary">
+פרויקט מעניין שהפך לזמין לציבור.
+</p>
+
+<div class="impact">
+<span>Impact: 7/10</span>
+<div class="impact-bar">
+<div class="impact-fill" style="width:70%"></div>
+</div>
+</div>
+
+<div class="actions">
+
+<button class="btn btn-primary" onclick="toggleCard(this)">
+קרא עוד
+</button>
+
+<a class="btn btn-secondary" href="#" target="_blank">
+GitHub
+</a>
+
+</div>
+
+<div class="details">
+
+<h4>מה זה?</h4>
+<p>הסבר פשוט למתחילים.</p>
+
+<h4>למה זה מעניין?</h4>
+<p>המשמעות המעשית.</p>
+
+<h4>למי זה מתאים?</h4>
+<p>מפתחים, חוקרים או משתמשים רגילים.</p>
+
+</div>
+
+</div>
+
+</article>
+
+</div>
+
+</section>
+
+<!-- ================= DEEP DIVE ================= -->
+
+<section class="section">
+
+<div class="deep-dive">
+
+<div class="deep-grid">
+
+<div>
+
+<span class="tag">🔬 DEEP DIVE</span>
+
+<h2>
+למה AI Agents הם אחד התחומים החשובים ביותר ב־AI?
+</h2>
+
+<p>
+שיעור עומק שמסביר את הנושא מהבסיס:
+מהו Agent, איך הוא שונה מצ'אטבוט,
+איך הוא משתמש בכלים, ומה המשמעות של מעבר
+מ"AI שעונה" ל־"AI שמבצע".
+</p>
+
+<button class="btn btn-primary">
+התחל Deep Dive
+</button>
+
+</div>
+
+<div class="deep-box">
+
+<strong>⏱️ זמן קריאה</strong>
+<p>10–15 דקות</p>
+
+<strong>📚 רמה</strong>
+<p>מתחילים</p>
+
+<strong>🧠 מה תלמד</strong>
+<p>
+Agents · Tools · Planning · Memory · Multi-Agent
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= DISCOVERY ================= -->
+
+<section id="discovery" class="section">
+
+<div class="section-title">
+
+<div>
+<h2>🤖 AI Discovery</h2>
+<p>מודלים, Agents, Spaces, כלים ודמואים חדשים</p>
+</div>
+
+</div>
+
+<div class="filters">
+
+<button class="filter active">הכול</button>
+<button class="filter">Models</button>
+<button class="filter">Agents</button>
+<button class="filter">Tools</button>
+<button class="filter">Spaces</button>
+<button class="filter">Open Source</button>
+<button class="filter">Demos</button>
+
+</div>
+
+<div class="discovery-grid">
+
+<div class="discovery">
+<div class="discovery-icon">🧠</div>
+<h3>Model חדש</h3>
+<p>
+מה המודל עושה, במה הוא שונה מהקודם ולמי הוא מתאים.
+</p>
+<a class="btn btn-primary" href="#" target="_blank">
+התנסה
+</a>
+</div>
+
+<div class="discovery">
+<div class="discovery-icon">🕵️</div>
+<h3>Agent חדש</h3>
+<p>
+סוכן שיכול לבצע משימות במקום רק לענות.
+</p>
+<a class="btn btn-primary" href="#" target="_blank">
+נסה
+</a>
+</div>
+
+<div class="discovery">
+<div class="discovery-icon">🏠</div>
+<h3>Hugging Face Space</h3>
+<p>
+דמו ציבורי מעניין שאפשר להפעיל בדפדפן.
+</p>
+<a class="btn btn-primary" href="#" target="_blank">
+פתח Space
+</a>
+</div>
+
+<div class="discovery">
+<div class="discovery-icon">🛠️</div>
+<h3>AI Tool</h3>
+<p>
+כלי חדש שכדאי להכיר ולבדוק.
+</p>
+<a class="btn btn-primary" href="#" target="_blank">
+פתח כלי
+</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= KNOWLEDGE LAB ================= -->
+
+<section id="knowledge" class="section">
+
+<div class="section-title">
+
+<div>
+<h2>🧠 Knowledge Lab</h2>
+<p>שני נושאי העשרה חדשים בכל יום</p>
+</div>
+
+</div>
+
+<div class="learning-grid">
+
+<!-- LESSON -->
+
+<article class="lesson">
+
+<span class="tag">🌌 חלל · מתחילים</span>
+
+<h3>איך נולד כוכב?</h3>
+
+<p>
+כדי להבין כוכבים צריך להתחיל מהבסיס:
+מהו בכלל כוכב, מאיפה מגיע החומר,
+וכיצד כוח הכבידה גורם לענן עצום של גז
+להפוך לגוף שמפיק אנרגיה.
+</p>
+
+<h4>📚 שלבי הלמידה</h4>
+
+<ol class="lesson-list">
+
+<li>מהו כוכב?</li>
+<li>מהו ענן מולקולרי?</li>
+<li>איך כוח הכבידה מתחיל את התהליך?</li>
+<li>איך נוצרת ליבה?</li>
+<li>איך מתחיל היתוך גרעיני?</li>
+<li>מה קובע את עתיד הכוכב?</li>
+
+</ol>
+
+<h4>🕰️ רצף התהליך</h4>
+
+<div class="timeline">
+
+<div class="timeline-item">
+<strong>שלב 1</strong><br>
+ענן גז ואבק
+</div>
+
+<div class="timeline-item">
+<strong>שלב 2</strong><br>
+קריסה כבידתית
+</div>
+
+<div class="timeline-item">
+<strong>שלב 3</strong><br>
+פרוטו־כוכב
+</div>
+
+<div class="timeline-item">
+<strong>שלב 4</strong><br>
+היתוך גרעיני
+</div>
+
+<div class="timeline-item">
+<strong>שלב 5</strong><br>
+כוכב פעיל
+</div>
+
+</div>
+
+<div class="fact">
+💡 <strong>הנקודה החשובה:</strong>
+כוכב אינו "בוער" כמו אש. האנרגיה שלו מגיעה מתהליכים גרעיניים בליבה.
+</div>
+
+<button class="btn btn-primary">
+המשך לשיעור המלא
+</button>
+
+</article>
+
+
+<!-- LESSON 2 -->
+
+<article class="lesson">
+
+<span class="tag">🏛️ היסטוריה · מתחילים</span>
+
+<h3>איך נבנתה האימפריה הרומית?</h3>
+
+<p>
+נכיר את רומא מההתחלה:
+ממלכה קטנה באיטליה שהפכה בהדרגה
+לאחת המעצמות הגדולות בהיסטוריה.
+</p>
+
+<h4>🕰️ ציר הזמן</h4>
+
+<div class="timeline">
+
+<div class="timeline-item">
+<strong>753 לפנה"ס</strong><br>
+המסורת הרומית מייחסת את ייסוד רומא לתקופה זו.
+</div>
+
+<div class="timeline-item">
+<strong>509 לפנה"ס</strong><br>
+תחילת הרפובליקה הרומית.
+</div>
+
+<div class="timeline-item">
+<strong>264–146 לפנה"ס</strong><br>
+המלחמות הפוניות.
+</div>
+
+<div class="timeline-item">
+<strong>27 לפנה"ס</strong><br>
+תחילת הקיסרות.
+</div>
+
+</div>
+
+<h4>👑 דמויות מרכזיות</h4>
+
+<ul>
+<li>יוליוס קיסר</li>
+<li>אוגוסטוס</li>
+<li>חניבעל</li>
+<li>סקיפיו אפריקנוס</li>
+</ul>
+
+<h4>🔗 למה זה קרה?</h4>
+
+<p>
+כאן צריך להסביר את הקשרים בין האירועים:
+צבא → התרחבות → כלכלה → פוליטיקה → מלחמות → שינוי המשטר.
+</p>
+
+<button class="btn btn-primary">
+המשך לשיעור המלא
+</button>
+
+</article>
+
+</div>
+
+</section>
+
+<!-- ================= QUIZ ================= -->
+
+<section id="quiz" class="section">
+
+<div class="section-title">
+
+<div>
+<h2>🎯 Daily Quiz</h2>
+<p>בדוק אם באמת הבנת את מה שלמדת היום</p>
+</div>
+
+</div>
+
+<div class="quiz">
+
+<div class="question">
+
+<h3>1. מאיפה מגיעה האנרגיה של השמש?</h3>
+
+<button class="option" onclick="answer(this,false)">
+A. שריפה של חמצן
+</button>
+
+<button class="option" onclick="answer(this,true)">
+B. היתוך גרעיני
+</button>
+
+<button class="option" onclick="answer(this,false)">
+C. שריפה של פחמן
+</button>
+
+<button class="option" onclick="answer(this,false)">
+D. חשמל
+</button>
+
+<div class="explanation">
+היתוך גרעיני מחבר גרעינים קלים יותר לגרעינים כבדים יותר,
+ובתהליך משתחררת אנרגיה.
+</div>
+
+</div>
+
+
+<div class="question">
+
+<h3>2. מהו היתרון האפשרי של מודל AI קטן יותר?</h3>
+
+<button class="option" onclick="answer(this,false)">
+A. הוא תמיד חכם יותר
+</button>
+
+<button class="option" onclick="answer(this,true)">
+B. הוא יכול להיות זול ויעיל יותר להרצה
+</button>
+
+<button class="option" onclick="answer(this,false)">
+C. הוא אינו צריך נתונים
+</button>
+
+<button class="option" onclick="answer(this,false)">
+D. הוא לעולם אינו טועה
+</button>
+
+<div class="explanation">
+מודלים קטנים יכולים להיות מהירים וזולים יותר במקרים מסוימים,
+אך הם אינם בהכרח טובים יותר ממודלים גדולים בכל משימה.
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= RECIPES ================= -->
+
+<section id="recipes" class="section">
+
+<div class="section-title">
+
+<div>
+<h2>🍳 Recipe Lab</h2>
+<p>מתכונים שכדאי לדעת להכין</p>
+</div>
+
+</div>
+
+<div class="recipe-grid">
+
+<div class="recipe">
+
+<div class="recipe-icon">🥗</div>
+
+<h3>קערת עוף וירקות</h3>
+
+<p>
+ארוחה פשוטה, עשירה בחלבון וירקות
+ומתאימה להכנה מהירה.
+</p>
+
+<div class="recipe-meta">
+<span>⏱️ 20 דקות</span>
+<span>🥗 בריא</span>
+<span>⭐ קל</span>
+</div>
+
+<br>
+
+<a class="btn btn-primary" href="#" target="_blank">
+▶️ YouTube Short
+</a>
+
+</div>
+
+
+<div class="recipe">
+
+<div class="recipe-icon">🍳</div>
+
+<h3>חביתה משודרגת</h3>
+
+<p>
+מתכון בסיסי שאפשר להפוך לארוחה מלאה.
+</p>
+
+<div class="recipe-meta">
+<span>⏱️ 10 דקות</span>
+<span>💰 זול</span>
+<span>⭐ קל</span>
+</div>
+
+<br>
+
+<a class="btn btn-primary" href="#" target="_blank">
+▶️ YouTube Short
+</a>
+
+</div>
+
+
+<div class="recipe">
+
+<div class="recipe-icon">🥣</div>
+
+<h3>יוגורט, פירות ושיבולת שועל</h3>
+
+<p>
+ארוחת בוקר מהירה עם חלבון, סיבים ופירות.
+</p>
+
+<div class="recipe-meta">
+<span>⏱️ 5 דקות</span>
+<span>🥗 בריא</span>
+<span>⭐ קל</span>
+</div>
+
+<br>
+
+<a class="btn btn-primary" href="#" target="_blank">
+▶️ YouTube Short
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= ARCHIVE ================= -->
+
+<section id="archive" class="section">
+
+<div class="section-title">
+
+<div>
+<h2>📚 Daily Archive</h2>
+<p>מהדורות קודמות</p>
+</div>
+
+</div>
+
+<div class="archive">
+
+<div class="archive-row">
+<strong>7 בספטמבר 2026</strong>
+<span>12 כתבות · 2 שיעורים · 9 Discoveries</span>
+</div>
+
+<div class="archive-row">
+<strong>6 בספטמבר 2026</strong>
+<span>10 כתבות · 2 שיעורים · 7 Discoveries</span>
+</div>
+
+<div class="archive-row">
+<strong>5 בספטמבר 2026</strong>
+<span>14 כתבות · 2 שיעורים · 11 Discoveries</span>
+</div>
+
+<div class="archive-row">
+<strong>4 בספטמבר 2026</strong>
+<span>11 כתבות · 2 שיעורים · 8 Discoveries</span>
+</div>
+
+</div>
+
+</section>
+
 </main>
 
+<!-- ================= FOOTER ================= -->
+
 <footer>
-  <div class="footer-inner">
-    <div>
-      <strong>🧠 Daily Knowledge</strong>
-      <p>להתעדכן. ללמוד. לגלות משהו חדש בכל יום.</p>
-    </div>
-    <div>
-      <p>News · AI Discovery · Knowledge Lab · Recipes · Quiz</p>
-    </div>
-  </div>
+
+<div class="footer-inner">
+
+<div>
+<strong>🧠 Daily Knowledge</strong>
+<p>
+להתעדכן. ללמוד. לגלות משהו חדש בכל יום.
+</p>
+</div>
+
+<div>
+<p>
+News · AI Discovery · Knowledge Lab · Recipes · Quiz
+</p>
+</div>
+
+</div>
+
 </footer>
 
+
 <script>
+
+/* ================= NAVIGATION ================= */
+
 function showSection(id,button){
-  const target = document.getElementById(id);
-  if(target){
-    target.scrollIntoView({ behavior:'smooth', block:'start' });
-  }
-  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-  button.classList.add('active');
+
+    document.querySelectorAll('.section').forEach(section=>{
+        if(
+            section.id === id ||
+            id === 'home' && section.id === 'home' ||
+            id === 'news' && section.id === 'news' ||
+            id === 'discovery' && section.id === 'discovery' ||
+            id === 'knowledge' && section.id === 'knowledge' ||
+            id === 'recipes' && section.id === 'recipes' ||
+            id === 'quiz' && section.id === 'quiz' ||
+            id === 'archive' && section.id === 'archive'
+        ){
+            section.scrollIntoView({
+                behavior:'smooth',
+                block:'start'
+            });
+        }
+    });
+
+    document.querySelectorAll('.nav-btn').forEach(btn=>{
+        btn.classList.remove('active');
+    });
+
+    button.classList.add('active');
 }
+
+
+/* ================= NEWS EXPAND ================= */
 
 function toggleCard(button){
-  const card = button.closest('.news-card');
-  card.classList.toggle('open');
-  button.textContent = card.classList.contains('open') ? 'סגור' : 'קרא עוד';
+
+    const card = button.closest('.news-card');
+
+    card.classList.toggle('open');
+
+    button.textContent =
+        card.classList.contains('open')
+        ? 'סגור'
+        : 'קרא עוד';
 }
+
+
+/* ================= MORE NEWS ================= */
 
 function showMoreNews(){
-  const grid = document.getElementById('newsGrid');
-  const extraNews = [
-    'עדכון משמעותי לפלטפורמת AI ציבורית',
-    'מודל Open Source חדש הופיע ברשת',
-    'כלי חדש מאפשר יצירת תוכן וידאו מתקדם',
-    'מחקר חדש מציג שיפור ביכולות ה-Reasoning'
-  ];
-  extraNews.forEach((title, index) => {
-    const article = document.createElement('article');
-    article.className = 'news-card';
-    article.innerHTML = `
-      <div class="news-content">
+
+    const grid = document.getElementById('newsGrid');
+
+    const extraNews = [
+
+        'חברת AI חדשה הכריזה על כלי קוד חדש',
+        'עדכון משמעותי לפלטפורמת AI ציבורית',
+        'מודל Open Source חדש הופיע ברשת',
+        'שוק ה-AI ממשיך להשתנות במהירות',
+        'כלי חדש מאפשר יצירת וידאו באמצעות AI',
+        'Agent חדש מתמחה במחקר אינטרנטי',
+        'חברת טכנולוגיה גדולה השיקה API חדש',
+        'מחקר חדש מציג שיפור ביכולת reasoning',
+        'כלי AI חדש למפתחים',
+        'עדכון משמעותי בעולם ה-AI Hardware',
+        'מודל חדש בתחום הראייה הממוחשבת',
+        'חידוש בתחום AI Audio',
+        'פיצ׳ר חדש בפלטפורמת AI',
+        'סטארטאפ חדש בתחום Agents',
+        'פרויקט מחקר חדש הגיע ל-GitHub',
+        'כלי חדש ליצירת אפליקציות באמצעות AI',
+        'מודל חדש למשימות Coding',
+        'פלטפורמת AI חדשה נפתחה לציבור',
+        'עדכון חדש בתחום AI Safety',
+        'שיתוף פעולה חדש בין חברות טכנולוגיה'
+
+    ];
+
+    extraNews.forEach((title,index)=>{
+
+        const article=document.createElement('article');
+
+        article.className='news-card';
+
+        article.innerHTML=`
+
+        <div class="news-content">
+
         <div class="news-meta">
-          <span>🆕 חדש</span>
-          <span>עוד היום</span>
+        <span>🆕 חדש</span>
+        <span>עוד היום</span>
         </div>
+
         <h3>${title}</h3>
-        <p class="summary">סקירה מקיפה על ההתפתחויות האחרונות בתחום והמשמעות שלהן לשוק הטכנולוגי.</p>
+
+        <p class="summary">
+        תוכן זה הוא placeholder.
+        בגרסה האמיתית יש להחליף אותו בכתבה אמיתית,
+        מאומתת ועדכנית עם מקור מלא ונגיש.
+        </p>
+
         <div class="impact">
-          <span>Impact: ${7 + (index % 3)}/10</span>
-          <div class="impact-bar"><div class="impact-fill" style="width:${70 + (index % 3) * 10}%"></div></div>
+        <span>Impact: ${5+(index%5)}/10</span>
+        <div class="impact-bar">
+        <div class="impact-fill"
+        style="width:${50+(index%5)*10}%">
         </div>
+        </div>
+        </div>
+
         <div class="actions">
-          <button class="btn btn-primary" onclick="toggleCard(this)">קרא עוד</button>
-          <a class="btn btn-secondary" href="https://github.com" target="_blank">מקור</a>
+
+        <button
+        class="btn btn-primary"
+        onclick="toggleCard(this)">
+        קרא עוד
+        </button>
+
+        <a
+        class="btn btn-secondary"
+        href="#"
+        target="_blank">
+        מקור
+        </a>
+
         </div>
+
         <div class="details">
-          <h4>🆕 מה קרה?</h4>
-          <p>הכרזה רשמית מצד גורמים מובילים בתעשייה על שחרור פיצ'ר או מערכת חדשה.</p>
-          <h4>⚙️ מה חדש?</h4>
-          <p>שיפורים משמעותיים במהירות הביצוע ובהתאמה אישית למשתמשים.</p>
+
+        <h4>🆕 מה קרה?</h4>
+
+        <p>
+        כאן יופיע הסבר מלא המבוסס על מקורות אמיתיים.
+        </p>
+
+        <h4>⚙️ מה חדש?</h4>
+
+        <p>
+        כאן יפורט מה השתנה לעומת המצב הקודם.
+        </p>
+
+        <h4>⚠️ מגבלות</h4>
+
+        <p>
+        כאן יופיעו המגבלות הידועות.
+        </p>
+
+        <h4>🔮 מה הלאה?</h4>
+
+        <p>
+        ניתוח נפרד וברור של ההתפתחויות האפשריות.
+        </p>
+
         </div>
-      </div>
-    `;
-    grid.appendChild(article);
-  });
+
+        </div>
+
+        `;
+
+        grid.appendChild(article);
+
+    });
+
 }
+
+
+/* ================= SEARCH ================= */
 
 function searchNews(){
-  const query = document.getElementById('searchInput').value.toLowerCase();
-  document.querySelectorAll('.news-card').forEach(card => {
-    const text = card.innerText.toLowerCase();
-    card.style.display = text.includes(query) ? '' : 'none';
-  });
-}
 
-function answer(button, correct){
-  const question = button.closest('.question');
-  const options = question.querySelectorAll('.option');
-  options.forEach(opt => opt.disabled = true);
-  button.classList.add(correct ? 'correct' : 'wrong');
-  if(!correct){
-    options.forEach(opt => {
-      if(opt.getAttribute('onclick').includes('true')){
-        opt.classList.add('correct');
-      }
+    const query =
+        document
+        .getElementById('searchInput')
+        .value
+        .toLowerCase();
+
+    document
+    .querySelectorAll('.news-card')
+    .forEach(card=>{
+
+        const text =
+            card.innerText.toLowerCase();
+
+        card.style.display =
+            text.includes(query)
+            ? ''
+            : 'none';
+
     });
-  }
-  const explanation = question.querySelector('.explanation');
-  explanation.style.display = 'block';
+
 }
 
-document.querySelectorAll('.filter').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.filter').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-  });
+
+/* ================= QUIZ ================= */
+
+function answer(button,correct){
+
+    const question =
+        button.closest('.question');
+
+    const options =
+        question.querySelectorAll('.option');
+
+    options.forEach(option=>{
+        option.disabled=true;
+    });
+
+    button.classList.add(
+        correct
+        ? 'correct'
+        : 'wrong'
+    );
+
+    if(!correct){
+
+        options.forEach(option=>{
+
+            if(
+                option.getAttribute('onclick')
+                .includes('true')
+            ){
+                option.classList.add('correct');
+            }
+
+        });
+
+    }
+
+    const explanation =
+        question.querySelector('.explanation');
+
+    explanation.style.display='block';
+
+}
+
+
+/* ================= FILTERS ================= */
+
+document
+.querySelectorAll('.filter')
+.forEach(button=>{
+
+    button.addEventListener('click',()=>{
+
+        document
+        .querySelectorAll('.filter')
+        .forEach(btn=>{
+            btn.classList.remove('active');
+        });
+
+        button.classList.add('active');
+
+    });
+
 });
+
 </script>
+
 </body>
 </html>
