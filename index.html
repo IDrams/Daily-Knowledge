@@ -1,147 +1,183 @@
-הנה קובץ ה-HTML המלא והמעוצב בדיוק לפי הקוד שביקשת, מוכן לשמירה:
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Intelligence - דשבורד ראשי</title>
+    <title>Daily Knowledge — חדשות ועדכוני היום</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131c2e;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.15);
+            --bg-main: #07090e;
+            --bg-surface: #0f172a;
+            --bg-card: #131c2e;
             --border-color: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #38bdf8;
+            --accent-indigo: #818cf8;
+            --accent-emerald: #34d399;
+            --accent-amber: #fbbf24;
         }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-main);
             color: var(--text-primary);
-            margin: 0;
-            padding: 20px;
             line-height: 1.7;
+            padding-bottom: 60px;
         }
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            padding: 50px 20px;
+
+        .top-bar {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
-            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        header h1 {
-            font-size: 2.8rem;
-            margin: 0 0 10px 0;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-title { font-size: 1.2rem; font-weight: 800; color: #fff; }
+
+        .container { max-width: 900px; margin: 30px auto 0 auto; padding: 0 20px; }
+
+        .morning-brief {
+            background: linear-gradient(135deg, #131c2e, #1a2744);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
         }
-        header p {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin: 0;
-        }
-        .section-title {
-            font-size: 1.6rem;
-            margin: 45px 0 25px 0;
-            border-right: 4px solid var(--accent-color);
+        .brief-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .brief-title { font-size: 1.3rem; font-weight: 800; color: #fff; display: flex; gap: 10px; align-items: center; }
+        .brief-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+        .brief-item { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); padding: 16px; border-radius: 12px; }
+        .brief-item h4 { font-size: 1rem; color: #fff; margin-bottom: 6px; }
+        .brief-item p { font-size: 0.88rem; color: var(--text-secondary); }
+
+        .section-header {
+            margin: 40px 0 20px 0;
+            border-right: 4px solid var(--accent-blue);
             padding-right: 14px;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
         }
+        .section-header h2 { font-size: 1.4rem; font-weight: 800; color: #fff; }
+
         .card {
-            background-color: var(--card-bg);
+            background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 28px;
             margin-bottom: 24px;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.35rem;
-            color: #e2e8f0;
-            margin-bottom: 12px;
+        .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+        .badge { background: rgba(56, 189, 248, 0.1); color: var(--accent-blue); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; }
+        .badge.verified { background: rgba(52, 211, 153, 0.1); color: var(--accent-emerald); }
+        .badge.impact { background: rgba(251, 191, 36, 0.1); color: var(--accent-amber); }
+
+        .card h3 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 14px; }
+        
+        .fact-analysis-box {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 16px 0;
         }
-        .card p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            margin-bottom: 14px;
+        .fa-section {
+            background: var(--bg-surface);
+            padding: 14px 16px;
+            border-radius: 10px;
+            border-right: 3px solid var(--accent-blue);
         }
-        .badge {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--accent-color);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        footer {
-            text-align: center;
-            padding: 50px 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-            margin-top: 60px;
-        }
+        .fa-section.analysis-sec { border-right-color: var(--accent-indigo); }
+        .fa-section.next-sec { border-right-color: var(--accent-emerald); }
+        .fa-title { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; color: var(--text-muted); }
+        .fa-content { font-size: 0.93rem; color: var(--text-secondary); }
+
+        footer { text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 60px; }
     </style>
 </head>
 <body>
+
+    <div class="top-bar">
+        <div class="logo-area">
+            <span style="font-size: 1.4rem;">⚡</span>
+            <span class="logo-title">Daily Knowledge Intelligence</span>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--accent-blue); font-weight: 700;">
+            📅 7 בספטמבר 2026
+        </div>
+    </div>
+
     <div class="container">
-        <header>
-            <h1>Daily Intelligence</h1>
-            <p>הדשבורד האישי שלך — עדכון יומי שוטף</p>
-        </header>
 
-        <h2 class="section-title">📰 חדשות ה-AI ושוק ההייטק</h2>
-        
-        <div class="card">
-            <span class="badge">ארכיטקטורת מערכות</span>
-            <h3>פלטפורמות ניהול ותזמור סוכנים (Multi-Agent Orchestration)</h3>
-            <p><strong>העדכון המרכזי:</strong> חברות תוכנה מובילות משחררות כלי ניהול מערכתיים המאפשרים לסוכני AI שונים לתקשר ביניהם באופן מבוקר ובטוח בתוך סביבת הארגון.</p>
-            <p><strong>מאחורי הקלעים:</strong> המעבר הוא מסוכנים בודדים שעובדים לבד מול משתמש אל עבר "צוותים וירטואליים" של סוכנים שצריכים לנהל פרוטוקולים ולחלוק משימות.</p>
+        <!-- Morning Brief -->
+        <div class="morning-brief">
+            <div class="brief-header">
+                <div class="brief-title"><span>☀️</span> Morning Brief — חדשות היום בקצרה</div>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">מהדורת מומחים</span>
+            </div>
+            <div class="brief-items">
+                <div class="brief-item">
+                    <h4>01. ארכיטקטורת Multi-Agent</h4>
+                    <p>מעבר משליפת תשובות לבקרת תזמור מרכזית של סוכני AI אוטונומיים בארגונים.</p>
+                </div>
+                <div class="brief-item">
+                    <h4>02. עידן ה-SLMs המקומיים</h4>
+                    <p>העדפת מודלים קטנים ומאובטחים שרצים ישירות על שרתי הבית לצורכי פרטיות וחיסכון.</p>
+                </div>
+                <div class="brief-item">
+                    <h4>03. אסטרופיזיקה מולקולרית</h4>
+                    <p>מנגנון ההיתוך הגרעיני הסולארי: מיליוני טונות חומר מומרים לאנרגיה מדי שנייה.</p>
+                </div>
+            </div>
         </div>
 
+        <div class="section-header"><h2>📰 הכתבה המרכזית להיום (Deep Dive)</h2></div>
+
         <div class="card">
-            <span class="badge">אופטימיזציית תשתיות</span>
-            <h3>האצת המעבר למודלי שפה מוקטנים ויעילים (SLMs)</h3>
-            <p><strong>העדכון המרכזי:</strong> ארגונים עוצרים פרויקטים של הטמעת ענקי מודלים לטובת מודלים קטנים וממוקדים (בסביבות 7 עד 30 מיליארד פרמטרים) שרצים מקומית על שרתי החברה.</p>
-            <p><strong>מאחורי הקלעים:</strong> החיסכון בעלויות החשמל, ההסקה והאבטחה המוחלטת של מידע שלא יוצא לענן חיצוני גורמים למנמ"רים להעדיף דיוק נקודתי.</p>
+            <div class="badge-row">
+                <span class="badge verified">🟢 Verified</span>
+                <span class="badge impact">🔥 Impact: 9/10</span>
+                <span class="badge">Multi-Agent Control</span>
+            </div>
+            <h3>פלטפורמות תזמור וניהול סוכנים בארגונים (Multi-Agent Orchestration)</h3>
+            
+            <div class="fact-analysis-box">
+                <div class="fa-section">
+                    <div class="fa-title">📌 FACT (מה קרה בפועל)</div>
+                    <div class="fa-content">חברות תוכנה מובילות שחררו השבוע מסגרות עבודה (Control Planes) לניהול סוכני AI מרובים, המאפשרים לסוכן כתיבת קוד ולסוכן בדיקות לתקשר ישירות.</div>
+                </div>
+                <div class="fa-section analysis-sec">
+                    <div class="fa-title">🔍 ANALYSIS (ניתוח מקצועי)</div>
+                    <div class="fa-content">המעבר מפותר בודד למבנה של צוותים וירטואליים מוריד את שיעור ההזיות (Hallucinations) ומאפשר אוטומציה של תהליכי פיתוח שלמים.</div>
+                </div>
+                <div class="fa-section next-sec">
+                    <div class="fa-title">🔮 WHAT'S NEXT (תחזית לעתיד)</div>
+                    <div class="fa-content">צפוי מעבר של תקציבי תוכנה ממערכות SaaS מסורתיות לפלטפורמות ניהול מבוססות סוכנים אוטונומיים לחלוטין.</div>
+                </div>
+            </div>
         </div>
 
-        <h2 class="section-title">🚀 AI Discoveries — פיתוחים וכלים חדשים</h2>
+        <div class="section-header"><h2>📰 חדשות נוספות מהתעשייה</h2></div>
 
         <div class="card">
-            <span class="badge">Open Source Edge</span>
-            <h3>1. Llama-Mesh / Distributed Edge AI</h3>
-            <p><strong>מה זה עושה:</strong> פריצת דרך המאפשרת למספר מכשירים קטנים לחלוק ביניהם את העומס של הרצת מודל AI גדול במקביל דרך הרשת המקומית, בלי צורך בכרטיס מסך יקר בענן.</p>
-        </div>
-
-        <div class="card">
-            <span class="badge">Generative Audio</span>
-            <h3>2. AudioCraft Soundscaper</h3>
-            <p><strong>מה זה עושה:</strong> כלי קוד פתוח המייצר אפקטים קוליים ומרקמים אקוסטיים מתקדמים מתיאור טקסט חופשי ליצירת סביבות שמע ריאליסטיות ברגע.</p>
-        </div>
-
-        <h2 class="section-title">💡 פינת ידע כללי — מדע וטכנולוגיה לעומק</h2>
-
-        <div class="card">
-            <span class="badge">אסטרופיזיקה</span>
-            <h3>איך השמש מייצרת אנרגיה מבלי להסתיים?</h3>
-            <p><strong>מאחורי הקלעים:</strong> בשמש אין אש רגילה, אלא תהליך של <strong>היתוך גרעיני</strong>. הלחץ העצום והטמפרטורה במרכז השמש מוחצים אטומי מימן לכדי הליום.</p>
-            <p><strong>הקסם שמאחורי הנוסחה:</strong> המסות הופכות לאנרגיה טהורה לפי הנוסחה המפורסמת, והשמש ממירה כ-4 מיליון טונות של חומר לאנרגיה בכל שנייה.</p>
+            <div class="badge-row">
+                <span class="badge verified">🟢 Verified</span>
+                <span class="badge impact">🔥 8.5/10</span>
+            </div>
+            <h3>האצת המעבר למודלי שפה מוקטנים ויעילים (SLMs) בארגונים</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 10px;">
+                ארגונים פיננסיים ובטחוניים עוצרים פרויקטים של הטמעת ענקי ענן לטובת מודלי 7B–30B מקומיים המריצים הסקה מהירה באפס עלויות ענן ובפרטיות מלאה.
+            </p>
         </div>
 
         <footer>
-            <p>© 2026 Daily Intelligence. כל הזכויות שמורות.</p>
+            <p>© 2026 Daily Intelligence & Knowledge Lab. כל הזכויות שמורות.</p>
         </footer>
     </div>
 </body>
